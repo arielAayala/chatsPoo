@@ -2,8 +2,8 @@ import { useState } from "react"
 import { useAuth } from "../context/authContext";
 import {useNavigate} from "react-router-dom"
 import logo from "../assets/static/logo.png"
-import Header from "../no se si sirve/header";
-import Footer from "../no se si sirve/footer"
+import Header from "../components/header";
+import Footer from "../components/footer"
 
 export default function Register(){
     
@@ -28,7 +28,6 @@ export default function Register(){
             await signUp(user.email,user.password); 
             navigate("/")
         } catch (error) {
-            setError(error.code)
             if(error.code === "auth/email-already-in-use"){
                 setError("El correo ya esta registrado")
             } else if(error.code === "auth/weak-password"){

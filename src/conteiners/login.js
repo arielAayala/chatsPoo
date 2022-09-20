@@ -35,6 +35,8 @@ export default function Login(){
         }
     }
 
+    const handleGoRegister = () => {navigate("/register")}
+
     return(
     <div>
         <nav class="navbar navbar-expand-lg bg-black">
@@ -70,6 +72,7 @@ export default function Login(){
                     <button class=" btn btn-lg btn-primary" type="submit">Ingresar</button>
                 </form>
             </div>
+            <button class="btn btn-lg btn-primary mt-2" onClick={handleGoRegister}>Unete</button>
         </div>
         <Footer/>
     </div>

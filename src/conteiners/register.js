@@ -2,7 +2,6 @@ import { useState } from "react"
 import { useAuth } from "../context/authContext";
 import {useNavigate} from "react-router-dom"
 import logo from "../assets/static/logo.png"
-import Header from "../components/header";
 import Footer from "../components/footer"
 
 export default function Register(){
@@ -40,7 +39,11 @@ export default function Register(){
 
     return(
     <div>
-        <Header/>
+        <nav class="navbar navbar-expand-lg bg-black">
+            <div class="container-fluid">
+                <a class="navbar-brand text-light" href="/">Chat'sApp</a>  
+            </div>
+        </nav>
         <div class="text-center my-5">
             <div class="form-signin w-100 m-auto">
                 <form onSubmit={handleSubmit}>

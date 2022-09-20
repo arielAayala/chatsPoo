@@ -1,8 +1,15 @@
 
 import Header from "../components/header"
 import Footer from "../components/footer"
+import { useAuth } from "../context/authContext"
 
 export default function Home(){
+
+    const {user} = useAuth()
+
+    if(user) {
+        console.log(user)
+    }
 
     return(
         <div>

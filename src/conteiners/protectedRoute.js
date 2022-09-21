@@ -7,19 +7,21 @@ export default function ProtectedRoute({children}){
 
     if (loading) return (
         <div>
-            <nav class="navbar navbar-expand-lg bg-black">
-                <div class="container-fluid">
-                    <a class="navbar-brand text-light" href="/">Chat'sApp</a>  
+            <nav className="navbar navbar-expand-lg bg-black">
+                <div className="container-fluid">
+                    <a className="navbar-brand text-light" href="/">Chat'sApp</a>  
                 </div>
             </nav>
-            <div class="text-center my-5">
-                <h1 class="h3 mb-3 fw-normal">Cargando...</h1>
+            <div className="text-center my-5">
+                <h1 className="h3 mb-3 fw-normal">Cargando...</h1>
             </div>
             <Footer></Footer>
         </div>
     )
 
-    if (!user) return <Navigate to="/login"/>
+    if (!user){
+        return <Navigate to="/login"/>
+    } 
 
     return <>{children}</>
 }

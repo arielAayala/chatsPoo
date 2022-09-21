@@ -3,16 +3,18 @@ import { useAuth } from "../context/authContext";
 import {useNavigate} from "react-router-dom"
 import logo from "../assets/static/logo.png"
 import Footer from "../components/footer"
+import { documentUserDB } from "../services/firebase";
+
 
 export default function Register(){
     
-    const [user, setUser] = useState({
+    const [usuario, setusuario] = useState({
         email:"",
         password:""
     });
 
     const handleChange = ({target:{name,value}}) => {
-       setUser({...user,[name]:value})
+       setusuario({...usuario,[name]:value})
     }
     
     const navigate = useNavigate()
@@ -24,8 +26,9 @@ export default function Register(){
         e.preventDefault()
         setError(" ")
         try {
-            await signUp(user.email,user.password); 
-            navigate("/")
+            const usuariosignUp= await signUp(usuario.email,usuario.password);
+            documentUserDB(usuariosignUp)
+            navigate("/login")
         } catch (error) {
             if(error.code === "auth/email-already-in-use"){
                 setError("El correo ya esta registrado")
@@ -34,22 +37,23 @@ export default function Register(){
             } else if( error.code === "auth/invalid-email"){
                 setError("El email no es valido")
             }
+            console.log(error)
         }
     }
 
     return(
     <div>
-        <nav class="navbar navbar-expand-lg bg-black">
-            <div class="container-fluid">
-                <a class="navbar-brand text-light" href="/">Chat'sApp</a>  
+        <nav className="navbar navbar-expand-lg bg-black">
+            <div className="container-fluid">
+                <a className="navbar-brand text-light" href="/">Chat'sApp</a>  
             </div>
         </nav>
-        <div class="text-center my-5">
-            <div class="form-signin w-100 m-auto">
+        <div className="text-center my-5">
+            <div className="form-signin w-100 m-auto">
                 <form onSubmit={handleSubmit}>
-                    <img class="mb-4" src={logo} width="72" height="57" alt="logo"/>
-                    <h1 class="h3 mb-3 fw-normal">Registrate</h1>
-                    <div class="form-floating">
+                    <img className="mb-4" src={logo} width="72" height="57" alt="logo"/>
+                    <h1 className="h3 mb-3 fw-normal">Registrate</h1>
+                    <div className="form-floating">
                         <input 
                             type="email" 
                             name="email" 
@@ -58,7 +62,7 @@ export default function Register(){
                         </input>
                     </div>
 
-                    <div class="form-floating">
+                    <div className="form-floating">
                         <input 
                             type="password" 
                             id="password" 
@@ -69,7 +73,7 @@ export default function Register(){
                     </div>
                     
                     {error && <p>{error}</p>}
-                    <button class=" btn btn-lg btn-primary" type="submit">Registrarse</button>
+                    <button className=" btn btn-lg btn-primary" type="submit">Registrarse</button>
                 </form>
             </div>
         </div>

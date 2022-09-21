@@ -2,54 +2,74 @@ import { useState } from "react"
 import { useAuth } from "../context/authContext";
 import {useNavigate} from "react-router-dom"
 import logo from "../assets/static/logo.png"
+import logoGoogle from "../assets/static/google.png"
 import Footer from "../components/footer"
+import {documentUserDB} from "../services/firebase"
+
+
 
 export default function Login(){
     
-    const [user, setUser] = useState({
+    const [usuario, setUsuario] = useState({
         email:"",
         password:""
     });
 
-    const handleChange = ({target:{name,value}}) => {
-       setUser({...user,[name]:value})
-    }
+    const handleChange = ({target:{name,value}}) => setUsuario({...usuario,[name]:value})
+
     
     const navigate = useNavigate()
-    const {logIn} = useAuth()
+    const {logIn,logInWithGoogle} = useAuth()
     const [error=" ", setError] = useState();
         
     
+    /* login with email */   
+
     const handleLogIn = async (e) =>{
         e.preventDefault()
         setError(" ")
         try {
-            await logIn(user.email,user.password); 
+            await logIn(usuario.email,usuario.password);
             navigate("/")
         } catch (error) {
             if(error.code === "auth/wrong-password"){
                 setError("La contraseña es incorrecta")
             } else if(error.code === "auth/user-not-found"){
                 setError("Usuario no encontrado")
-            } 
+            } else if( (error.code === "auth/invalid-email")){
+                setError("Email no valido")
+            }
         }
     }
 
-    const handleGoRegister = () => {navigate("/register")}
+
+    /* login with google popup */
+
+    const handleLogInGoogle = async (e) =>{
+        try{
+            const usuarioLoginGoogle =await logInWithGoogle()
+            documentUserDB(usuarioLoginGoogle)
+            navigate("/")
+        }catch(error){
+            console.log(error)
+        }
+
+        
+    }
 
     return(
     <div>
-        <nav class="navbar navbar-expand-lg bg-black">
-            <div class="container-fluid">
-                <a class="navbar-brand text-light" href="/">Chat'sApp</a>  
+        <nav className="navbar navbar-expand-lg bg-black">
+            <div className="container-fluid">
+                <a className="navbar-brand text-light" href="/">Chat'sApp</a>  
             </div>
         </nav>
-        <div class="text-center my-5">
-            <div class="form-signin w-100 m-auto">
+        <div className="text-center my-5">
+            <div className="form-signin w-100 m-auto">
                 <form onSubmit={handleLogIn}>
-                    <img class="mb-4" src={logo} width="72" height="57" alt="logo"/>
-                    <h1 class="h3 mb-3 fw-normal">Ingresar</h1>
-                    <div class="form-floating">
+                    <img className="mb-4" src={logo} width="72" height="57" alt="logo"/>
+                    <h1 className="h3 mb-3 fw-normal">Ingresar</h1>
+                    <div className="form-floating">
                         <input 
                             type="email" 
                             name="email" 
@@ -58,7 +78,7 @@ export default function Login(){
                         </input>
                     </div>
 
-                    <div class="form-floating">
+                    <div className="form-floating">
                         <input 
                             type="password" 
                             id="password" 
@@ -69,10 +89,11 @@ export default function Login(){
                     </div>
                     
                     {error && <p>{error}</p>}
-                    <button class=" btn btn-lg btn-primary" type="submit">Ingresar</button>
+                    <button className="btn btn-lg btn-primary" type="submit">Ingresar</button>
                 </form>
+                <img onClick={handleLogInGoogle} alt="LoginGoogle" className="m-3"  width="30" height="30" src={logoGoogle}/>
             </div>
-            <button class="btn btn-lg btn-primary mt-2" onClick={handleGoRegister}>Unete</button>
+            <h3 className="h3 mb-3 fw-normal" >¿No te has registrado? <a href={("/register")}>Unete</a></h3> 
         </div>
         <Footer/>
     </div>

@@ -4,7 +4,10 @@ import {useNavigate} from "react-router-dom"
 import logo from "../assets/static/logo.png"
 import logoGoogle from "../assets/static/google.png"
 import Footer from "../components/footer"
-import {documentUserDB} from "../services/firebase"
+import {documentUserDB,db} from "../services/firebase"
+import { updateDoc,doc} from "firebase/firestore";
+
+
 
 
 
@@ -19,7 +22,7 @@ export default function Login(){
 
     
     const navigate = useNavigate()
-    const {logIn,logInWithGoogle} = useAuth()
+    const {logIn,logInWithGoogle,user} = useAuth()
     const [error=" ", setError] = useState();
         
     
@@ -30,6 +33,8 @@ export default function Login(){
         setError(" ")
         try {
             await logIn(usuario.email,usuario.password);
+            await updateDoc(doc(db,"usuarios",user.uid),{
+                isOnline:true})
             navigate("/")
         } catch (error) {
             if(error.code === "auth/wrong-password"){
@@ -49,6 +54,9 @@ export default function Login(){
         try{
             const usuarioLoginGoogle =await logInWithGoogle()
             documentUserDB(usuarioLoginGoogle)
+            await updateDoc(doc(db,"usuarios",usuarioLoginGoogle.user.uid),{
+                isOnline: true
+            })
             navigate("/")
         }catch(error){
             console.log(error)

@@ -1,12 +1,18 @@
 import { useAuth } from "../context/authContext"
+import { updateDoc,doc } from "firebase/firestore"
+import { db } from "../services/firebase"
+
 export default function Header(){
-  const {logOut} = useAuth()
+  const {logOut,user} = useAuth()
 
   const handleLogOut = async ()=>{
-      await logOut()
+      await updateDoc(doc(db,"usuarios",user.uid ),{
+        isOnline: false
+    })
+    await logOut()
   }
 
-  /* const handleChats = () =>{} */
+
 
     return(
       <div>
@@ -22,9 +28,6 @@ export default function Header(){
                   <li className="nav-item">
                     <button className="btn btn-outline-light" onClick={handleLogOut}>Salir</button>
                   </li>
-                  {/* <li className="nav-item">
-                    <button className="btn btn-outline-light" onClick={handleChats}>Chats</button>
-                  </li> */}
                 </ul>
               </div>
           </div>

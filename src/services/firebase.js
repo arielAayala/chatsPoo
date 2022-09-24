@@ -4,21 +4,33 @@ import {getAuth} from "firebase/auth"
 import { getFirestore, setDoc,doc} from "firebase/firestore"
 
 
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const {
+  REACT_APP_API_KEY,
+  REACT_APP_AUTH_DOMAIN,
+  REACT_APP_DATABASE_URL,
+  REACT_APP_PROJECT_ID,
+  REACT_APP_STORAGE_BUCKET,
+  REACT_APP_MESSAGING_SENDER_ID,
+  REACT_APP_APP_ID,
+  REACT_APP_MEASUREMENT_ID
+} = process.env;
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBxjkn5ps-770xQUPIDrBOmDX3Lu6UbUsU",
-  authDomain: "chat-poo-94425.firebaseapp.com",
-  databaseURL: "https://chat-poo-94425-default-rtdb.firebaseio.com",
-  projectId: "chat-poo-94425",
-  storageBucket: "chat-poo-94425.appspot.com",
-  messagingSenderId: "1054440467402",
-  appId: "1:1054440467402:web:96e058b4d84825faa23d33",
-  measurementId: "G-7ZW21DDYC1"
-};
+  apiKey: `${REACT_APP_API_KEY}`,
+  authDomain: `${REACT_APP_AUTH_DOMAIN}`,
+  databaseURL: `${REACT_APP_DATABASE_URL}`,
+  projectId: `${REACT_APP_PROJECT_ID}`,
+  storageBucket:`${REACT_APP_STORAGE_BUCKET}`,
+  messagingSenderId:`${REACT_APP_MESSAGING_SENDER_ID}`,
+  appId: `${REACT_APP_APP_ID}`,
+  measurementId: `${REACT_APP_MEASUREMENT_ID}`,
+}
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);

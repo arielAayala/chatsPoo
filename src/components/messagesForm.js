@@ -1,4 +1,4 @@
-import Attachment from "../assets/static/attachment"
+
 
 export default function MessageForm({handleSubmit,text,setText}){
 

@@ -35,7 +35,7 @@ export default function Home(){
             setUsers(lstUser)
         })
         return () => onsub() 
-    }, [])
+    }, [user.uid])
 
     const selectUser = (user) =>{
         setChat(user)
@@ -56,7 +56,6 @@ export default function Home(){
 
     const handleSumbit = async(e) =>{
         e.preventDefault()
-        console.log(user1,user2)
         await addDoc(collection(db,"messages",idChat,"chat"),{
             text,
             from:user1,

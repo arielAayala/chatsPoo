@@ -82,6 +82,7 @@ export default function Login(){
                             type="email" 
                             name="email" 
                             placeholder= "E-mail"
+                            autoComplete="on"
                             onChange={handleChange}>    
                         </input>
                     </div>
@@ -92,6 +93,7 @@ export default function Login(){
                             id="password" 
                             name= "password"
                             placeholder="******"
+                            autoComplete="on"
                             onChange={handleChange}>
                         </input>
                     </div>

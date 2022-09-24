@@ -58,6 +58,7 @@ export default function Register(){
                             type="email" 
                             name="email" 
                             placeholder= "E-mail"
+                            autoComplete="on"
                             onChange={handleChange}>    
                         </input>
                     </div>
@@ -67,6 +68,7 @@ export default function Register(){
                             type="password" 
                             id="password" 
                             name= "password"
+                            autoComplete="on"
                             placeholder="******"
                             onChange={handleChange}>
                         </input>

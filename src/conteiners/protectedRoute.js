@@ -1,7 +1,7 @@
 import {useAuth} from "../context/authContext"
 import { Navigate } from "react-router-dom"
 import Footer from "../components/footer"
-
+import React from "react";
 export default function ProtectedRoute({children}){
     const {user, loading} = useAuth()
 

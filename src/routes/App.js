@@ -1,9 +1,11 @@
+import React from "react"
 import { Route,Routes } from "react-router-dom"
 import Home from "../conteiners/home"
 import Login from "../conteiners/login"
 import Register from "../conteiners/register"
 import { AuthProvider } from "../context/authContext"
 import  ProtectedRoute from "../conteiners/protectedRoute"
+
 
 export default function App(){
     return(

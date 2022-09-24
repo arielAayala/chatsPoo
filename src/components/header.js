@@ -1,7 +1,7 @@
 import { useAuth } from "../context/authContext"
 import { updateDoc,doc } from "firebase/firestore"
 import { db } from "../services/firebase"
-
+import React from "react"
 export default function Header(){
   const {logOut,user} = useAuth()
 

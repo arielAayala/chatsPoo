@@ -1,5 +1,5 @@
 import  imgUser from "../assets/static/user.png";
-
+import React from "react";
 export default function User({user, selectUser}){
     return (
     <div className="user_wrapper" onClick={()=>selectUser(user)}>

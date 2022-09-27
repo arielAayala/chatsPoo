@@ -3,9 +3,11 @@ import { useAuth } from "../context/authContext";
 import {useNavigate} from "react-router-dom"
 import logo from "../assets/static/logo.png"
 import logoGoogle from "../assets/static/google.png"
+import logoGitHub from "../assets/static/github.png"
 import Footer from "../components/footer"
 import {documentUserDB,db} from "../services/firebase"
 import { updateDoc,doc} from "firebase/firestore";
+
 
 
 
@@ -22,7 +24,7 @@ export default function Login(){
 
     
     const navigate = useNavigate()
-    const {logIn,logInWithGoogle,user} = useAuth()
+    const {logIn,logInWithGoogle,user,logInWithGitHub} = useAuth()
     const [error=" ", setError] = useState();
         
     
@@ -65,6 +67,14 @@ export default function Login(){
         
     }
 
+    const handleLoginGitHub = async(e) =>{
+        const usuarioLoginGitHub = await logInWithGitHub()
+        documentUserDB(usuarioLoginGitHub)
+        await updateDoc(doc(db,"usuarios",usuarioLoginGitHub.user.uid),{
+            isOnline:true
+        })
+    }
+
     return(
     <div>
         <nav className="navbar navbar-expand-lg bg-black">
@@ -102,6 +112,7 @@ export default function Login(){
                     <button className="btn btn-lg btn-primary" type="submit">Ingresar</button>
                 </form>
                 <img onClick={handleLogInGoogle} alt="LoginGoogle" className="m-3"  width="30" height="30" src={logoGoogle}/>
+                <img onClick={handleLoginGitHub} alt="LoginGitHub" className="m-3" width="30" height="30" scr={logoGitHub}/>
             </div>
             <h3 className="h3 mb-3 fw-normal" >¿No te has registrado? <a href={("/register")}>Unete</a></h3> 
         </div>

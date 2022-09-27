@@ -1,5 +1,5 @@
 import {createContext, useContext, useEffect,useState} from "react"
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged,signOut,GoogleAuthProvider,signInWithPopup} from "firebase/auth"
+import {createUserWithEmailAndPassword, GithubAuthProvider,signInWithEmailAndPassword, onAuthStateChanged,signOut,GoogleAuthProvider,signInWithPopup} from "firebase/auth"
 import { auth } from "../services/firebase"
 import React from "react";
 
@@ -30,7 +30,10 @@ export function AuthProvider({children}){
         return signInWithPopup(auth,googleProvider)
     }
 
-
+    const logInWithGithub =() =>{
+        const gitHubProvider = GithubAuthProvider()
+        return signInWithPopup(auth,gitHubProvider)
+    } 
 
     /* verficar login */    
     useEffect(()=>{
@@ -40,5 +43,5 @@ export function AuthProvider({children}){
         })
     },[])
 
-    return <authContext.Provider value = {{signUp, logIn, user,logOut,loading , logInWithGoogle}}>{children}</authContext.Provider> 
+    return <authContext.Provider value = {{signUp, logIn, user,logOut,loading , logInWithGoogle,logInWithGithub}}>{children}</authContext.Provider> 
 }

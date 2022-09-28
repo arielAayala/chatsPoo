@@ -5,8 +5,7 @@ import logo from "../assets/static/logo.png"
 import logoGoogle from "../assets/static/google.png"
 import logoGitHub from "../assets/static/github.png"
 import Footer from "../components/footer"
-import {documentUserDB,db} from "../services/firebase"
-import { updateDoc,doc} from "firebase/firestore";
+
 
 
 
@@ -24,7 +23,7 @@ export default function Login(){
 
     
     const navigate = useNavigate()
-    const {logIn,logInWithGoogle,user,logInWithGitHub} = useAuth()
+    const {logIn,logInWithGoogle,logInWithGitHub,saveUser,stateUser} = useAuth()
     const [error=" ", setError] = useState();
         
     
@@ -34,9 +33,8 @@ export default function Login(){
         e.preventDefault()
         setError(" ")
         try {
-            await logIn(usuario.email,usuario.password);
-            await updateDoc(doc(db,"usuarios",user.uid),{
-                isOnline:true})
+            const usuarioLogin =await logIn(usuario.email,usuario.password);
+            stateUser(usuarioLogin)
             navigate("/")
         } catch (error) {
             setError(error.code)
@@ -56,10 +54,9 @@ export default function Login(){
     const handleLogInGoogle = async (e) =>{
         try{
             const usuarioLoginGoogle =await logInWithGoogle()
-            documentUserDB(usuarioLoginGoogle)
-            await updateDoc(doc(db,"usuarios",usuarioLoginGoogle.user.uid),{
-                isOnline: true
-            })
+            saveUser(usuarioLoginGoogle)
+            stateUser(usuarioLoginGoogle)
+        
             navigate("/")
         }catch(error){
             setError(error)
@@ -71,11 +68,9 @@ export default function Login(){
     const handleLogInGitHub = async(e) =>{
         try{
             const usuarioLoginGitHub = await logInWithGitHub()
-            documentUserDB(usuarioLoginGitHub)
-            await updateDoc(doc(db,"usuarios",usuarioLoginGitHub.user.uid),{
-                isOnline:true
-        })
-        navigate("/")
+            saveUser(usuarioLoginGitHub)
+            stateUser(usuarioLoginGitHub)
+            navigate("/")
         }catch(error){
             setError(error.code)
         }

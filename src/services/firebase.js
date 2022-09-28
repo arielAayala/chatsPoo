@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {getAuth} from "firebase/auth"
-import { getFirestore, setDoc,doc} from "firebase/firestore"
+import { getFirestore} from "firebase/firestore"
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -36,13 +36,3 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app)
 export const db = getFirestore(app)
 
-export const documentUserDB = async (userLogin) =>{
-  if (!userLogin) return
-  await setDoc(doc(db,"usuarios",userLogin.user.uid),{
-    uid: userLogin.user.uid,
-    displayName: userLogin.user.displayName,
-    email:userLogin.user.email,
-    photoURL:userLogin.user.photoURL,
-    isOnline: false
-  }) 
-}

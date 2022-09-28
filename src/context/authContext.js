@@ -2,7 +2,8 @@ import {createContext, useContext, useEffect,useState} from "react"
 import {createUserWithEmailAndPassword, sendPasswordResetEmail,GithubAuthProvider,signInWithEmailAndPassword, onAuthStateChanged,signOut,GoogleAuthProvider,signInWithPopup} from "firebase/auth"
 import { auth } from "../services/firebase"
 import React from "react";
-
+import { db } from "../services/firebase";
+import { updateDoc, setDoc,doc} from "firebase/firestore"
 export const authContext = createContext()
 
 export const useAuth = () =>{
@@ -37,6 +38,23 @@ export function AuthProvider({children}){
 
     const resetPassword = (email)=> sendPasswordResetEmail(auth,email)
 
+    const saveUser = async(userLogin) => {
+        if (!userLogin) return
+        await setDoc(doc(db,"usuarios",userLogin.user.uid),{
+          uid: userLogin.user.uid,
+          displayName: userLogin.user.displayName,
+          email:userLogin.user.email,
+          photoURL:userLogin.user.photoURL,
+          isOnline: false
+        }) 
+      }
+
+    const stateUser = async(userLogin) =>{
+        await updateDoc(doc(db,"usuarios",userLogin.user.uid),{
+            isOnline: true
+        })
+    }
+
     /* verficar login */    
     useEffect(()=>{
         onAuthStateChanged(auth,currentUser =>{
@@ -45,5 +63,5 @@ export function AuthProvider({children}){
         })
     },[])
 
-    return <authContext.Provider value = {{signUp, logIn, user,logOut,loading , logInWithGoogle,logInWithGitHub,resetPassword}}>{children}</authContext.Provider> 
+    return <authContext.Provider value = {{signUp, logIn, user,logOut,loading , logInWithGoogle,logInWithGitHub,resetPassword,saveUser,stateUser}}>{children}</authContext.Provider> 
 }

@@ -3,7 +3,7 @@ import { useAuth } from "../context/authContext";
 import {useNavigate} from "react-router-dom"
 import logo from "../assets/static/logo.png"
 import Footer from "../components/footer"
-import { documentUserDB } from "../services/firebase";
+
 
 
 export default function Register(){
@@ -18,7 +18,7 @@ export default function Register(){
     }
     
     const navigate = useNavigate()
-    const {signUp} = useAuth()
+    const {signUp,saveUser} = useAuth()
     const [error=" ", setError] = useState();
         
     
@@ -27,7 +27,7 @@ export default function Register(){
         setError(" ")
         try {
             const usuariosignUp= await signUp(usuario.email,usuario.password);
-            documentUserDB(usuariosignUp)
+            saveUser(usuariosignUp)
             navigate("/login")
         } catch (error) {
             if(error.code === "auth/email-already-in-use"){

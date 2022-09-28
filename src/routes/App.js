@@ -5,6 +5,7 @@ import Login from "../conteiners/login"
 import Register from "../conteiners/register"
 import { AuthProvider } from "../context/authContext"
 import  ProtectedRoute from "../conteiners/protectedRoute"
+import ResetPassword from "../conteiners/resetPassword"
 
 
 export default function App(){
@@ -13,7 +14,8 @@ export default function App(){
             <Routes>
                 <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}/>
                 <Route path="/login" element={<Login/>} />
-                <Route path="/Register" element={<Register/>}/>
+                <Route path="/register" element={<Register/>}/>
+                <Route path="/resetPassword" element={<ResetPassword/>}/>
             </Routes>
         </AuthProvider>
     )

@@ -42,6 +42,7 @@ export default function Home(){
 
         const user2 = user.uid
         const idChat = user1 > user2 ? `${user1 + user2}` : `${user2+user1}`
+
         const msgsRef = collection(db,"messages",idChat,"chat")
         const q = query(msgsRef,orderBy("createdAt","asc"))
         onSnapshot(q,querySnapshot =>{
@@ -63,7 +64,6 @@ export default function Home(){
             createdAt: Timestamp.fromDate(new Date())},
         setText(""))
     }
-
 
 
     return(

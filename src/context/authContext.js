@@ -1,5 +1,5 @@
 import {createContext, useContext, useEffect,useState} from "react"
-import {createUserWithEmailAndPassword, GithubAuthProvider,signInWithEmailAndPassword, onAuthStateChanged,signOut,GoogleAuthProvider,signInWithPopup} from "firebase/auth"
+import {createUserWithEmailAndPassword, sendPasswordResetEmail,GithubAuthProvider,signInWithEmailAndPassword, onAuthStateChanged,signOut,GoogleAuthProvider,signInWithPopup} from "firebase/auth"
 import { auth } from "../services/firebase"
 import React from "react";
 
@@ -35,6 +35,8 @@ export function AuthProvider({children}){
         return signInWithPopup(auth,gitHubProvider)
     } 
 
+    const resetPassword = (email)=> sendPasswordResetEmail(auth,email)
+
     /* verficar login */    
     useEffect(()=>{
         onAuthStateChanged(auth,currentUser =>{
@@ -43,5 +45,5 @@ export function AuthProvider({children}){
         })
     },[])
 
-    return <authContext.Provider value = {{signUp, logIn, user,logOut,loading , logInWithGoogle,logInWithGitHub}}>{children}</authContext.Provider> 
+    return <authContext.Provider value = {{signUp, logIn, user,logOut,loading , logInWithGoogle,logInWithGitHub,resetPassword}}>{children}</authContext.Provider> 
 }

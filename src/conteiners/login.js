@@ -121,7 +121,7 @@ export default function Login(){
                 <img onClick={handleLogInGitHub} alt="GitHub" className="m-3" width="30" height="30" scr={logoGitHub}/>
             </div>
             <h3 className="h3 mb-3 fw-normal" >¿No te has registrado? <a href={("/register")}>Únete</a></h3>
-            <h6 className="h5 mb-2 fw-normal">¿Has olvidado tu contraseña? <a href={("/")}>Recupérala</a></h6> 
+            <h6 className="h5 mb-2 fw-normal">¿Has olvidado tu contraseña? <a href={("/resetpassword")}>Recupérala</a></h6> 
         </div>
         <Footer/>
     </div>

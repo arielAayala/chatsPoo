@@ -39,6 +39,7 @@ export default function Login(){
                 isOnline:true})
             navigate("/")
         } catch (error) {
+            setError(error.code)
             if(error.code === "auth/wrong-password"){
                 setError("La contraseña es incorrecta")
             } else if(error.code === "auth/user-not-found"){
@@ -61,18 +62,23 @@ export default function Login(){
             })
             navigate("/")
         }catch(error){
-            console.log(error)
+            setError(error)
         }
 
         
     }
 
-    const handleLoginGitHub = async(e) =>{
-        const usuarioLoginGitHub = await logInWithGitHub()
-        documentUserDB(usuarioLoginGitHub)
-        await updateDoc(doc(db,"usuarios",usuarioLoginGitHub.user.uid),{
-            isOnline:true
+    const handleLogInGitHub = async(e) =>{
+        try{
+            const usuarioLoginGitHub = await logInWithGitHub()
+            documentUserDB(usuarioLoginGitHub)
+            await updateDoc(doc(db,"usuarios",usuarioLoginGitHub.user.uid),{
+                isOnline:true
         })
+        navigate("/")
+        }catch(error){
+            setError(error.code)
+        }
     }
 
     return(
@@ -112,9 +118,9 @@ export default function Login(){
                     <button className="btn btn-lg btn-primary" type="submit">Ingresar</button>
                 </form>
                 <img onClick={handleLogInGoogle} alt="LoginGoogle" className="m-3"  width="30" height="30" src={logoGoogle}/>
-                <img onClick={handleLoginGitHub} alt="LoginGitHub" className="m-3" width="30" height="30" scr={logoGitHub}/>
+                <img onClick={handleLogInGitHub} alt="LoginGitHub" className="m-3" width="30" height="30" scr={require(`../assets/static/github.png`).default}/>
             </div>
-            <h3 className="h3 mb-3 fw-normal" >¿No te has registrado? <a href={("/register")}>Unete</a></h3> 
+            <h3 className="h3 mb-3 fw-normal" >¿No te has registrado? <a href={("/register")}>Únete</a></h3> 
         </div>
         <Footer/>
     </div>

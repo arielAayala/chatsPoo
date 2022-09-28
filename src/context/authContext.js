@@ -30,8 +30,8 @@ export function AuthProvider({children}){
         return signInWithPopup(auth,googleProvider)
     }
 
-    const logInWithGithub =() =>{
-        const gitHubProvider = GithubAuthProvider()
+    const logInWithGitHub =() =>{
+        const gitHubProvider = new GithubAuthProvider()
         return signInWithPopup(auth,gitHubProvider)
     } 
 
@@ -43,5 +43,5 @@ export function AuthProvider({children}){
         })
     },[])
 
-    return <authContext.Provider value = {{signUp, logIn, user,logOut,loading , logInWithGoogle,logInWithGithub}}>{children}</authContext.Provider> 
+    return <authContext.Provider value = {{signUp, logIn, user,logOut,loading , logInWithGoogle,logInWithGitHub}}>{children}</authContext.Provider> 
 }

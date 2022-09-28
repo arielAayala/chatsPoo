@@ -37,6 +37,7 @@ export const auth = getAuth(app)
 export const db = getFirestore(app)
 
 export const documentUserDB = async (userLogin) =>{
+  console.log(userLogin)
   if (!userLogin) return
   await setDoc(doc(db,"usuarios",userLogin.user.uid),{
     uid: userLogin.user.uid,

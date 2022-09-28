@@ -117,8 +117,8 @@ export default function Login(){
                     {error && <p>{error}</p>}
                     <button className="btn btn-lg btn-primary" type="submit">Ingresar</button>
                 </form>
-                <img onClick={handleLogInGoogle} alt="LoginGoogle" className="m-3"  width="30" height="30" src={logoGoogle}/>
-                <img onClick={handleLogInGitHub} alt="LoginGitHub" className="m-3" width="30" height="30" scr={require(`../assets/static/github.png`).default}/>
+                <img onClick={handleLogInGoogle} alt="Google" className="m-3"  width="30" height="30" src={logoGoogle}/>
+                <img onClick={handleLogInGitHub} alt="GitHub" className="m-3" width="30" height="30" scr={require(`../assets/static/github.png`).default}/>
             </div>
             <h3 className="h3 mb-3 fw-normal" >¿No te has registrado? <a href={("/register")}>Únete</a></h3> 
         </div>
